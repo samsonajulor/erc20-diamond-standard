@@ -12,20 +12,6 @@ This is a mimimal template for [Diamonds](https://github.com/ethereum/EIPs/issue
 $ yarn && forge update
 ```
 
-### Compile
-
-```bash
-$ npx hardhat compile
-```
-
-## Deployment
-
-### Hardhat
-
-```bash
-$ npx hardhat run scripts/deploy.js
-```
-
 ### Foundry
 
 ```bash

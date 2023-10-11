@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-/******************************************************************************\
-* Author: Nick Mudge <nick@perfectabstractions.com> (https://twitter.com/mudgen)
-* EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535
-/******************************************************************************/
 import {IDiamondCut} from "../interfaces/IDiamondCut.sol";
 
 library LibDiamond {
@@ -47,6 +43,27 @@ library LibDiamond {
         mapping(bytes4 => bool) supportedInterfaces;
         // owner of the contract
         address contractOwner;
+
+        //ERC20 Storage
+    /*//////////////////////////////////////////////////////////////
+                            METADATA STORAGE
+    //////////////////////////////////////////////////////////////*/
+
+        string name;
+
+        string symbol;
+
+    /*//////////////////////////////////////////////////////////////
+                              ERC20 STORAGE
+    //////////////////////////////////////////////////////////////*/
+
+        uint256 totalSupply;
+
+        mapping(address => uint256) balanceOf;
+
+        mapping(address => mapping(address => uint256)) allowance;
+
+        mapping(address => uint256) nonces;
     }
 
     function diamondStorage()
@@ -70,6 +87,12 @@ library LibDiamond {
         address previousOwner = ds.contractOwner;
         ds.contractOwner = _newOwner;
         emit OwnershipTransferred(previousOwner, _newOwner);
+    }
+
+    function setERC20Details(string memory _name, string memory _symbol) internal {
+        DiamondStorage storage ds = diamondStorage();
+        ds.name = _name;
+        ds.symbol = _symbol;
     }
 
     function contractOwner() internal view returns (address contractOwner_) {
